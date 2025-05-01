@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aniversário da Barrichello</title>
+  <title>Parabéns!</title>
   <style>
     /* Canvas de fogos */
     #fireworksCanvas {
@@ -26,8 +26,9 @@
       justify-content: center;
       overflow: hidden;
     }
-    /* Imagem central fixa */
+    /* Imagem central fixa e responsiva */
     .center-image {
+      width: 80%;
       max-width: 300px;
       border-radius: 50%;
       box-shadow: 0 0 20px rgba(255,255,255,0.8);
@@ -54,33 +55,47 @@
       font-size: 1.2rem;
       text-align: center;
       word-wrap: break-word;
-      /* Ciclo de 4 frases: cada 30s, total 120s */
-      animation: quoteCycle 23s ease-in-out infinite, textGlow 2s ease-in-out infinite alternate;
+      animation: quoteCycle 120s ease-in-out infinite, textGlow 2s ease-in-out infinite alternate;
     }
     /* Posições nos quatro cantos */
-    .top-left { top: 10%; left: 15%; }
-    .top-right { top: 10%; right: 15%; }
-    .bottom-left { bottom: 10%; left: 15%; }
-    .bottom-right { bottom: 10%; right: 15%; }
-    
-    /* Delay para cada quote aparecer em sequência */
-    .quote:nth-child(1) { animation-delay:     0s,       0s; }
-    .quote:nth-child(2) { animation-delay:    0s,      0s; }
-    .quote:nth-child(3) { animation-delay:    0s,      0s; }
-    .quote:nth-child(4) { animation-delay:    0s,      0s; }
-
-    /* Aparecer/fade in (5s), visível (20s), desaparecer/fade out (5s), depois 90s fora */
+    .top-left { top: 5%; left: 5%; transform: none; }
+    .top-right { top: 5%; right: 5%; transform: none; }
+    .bottom-left { bottom: 5%; left: 5%; transform: none; }
+    .bottom-right { bottom: 5%; right: 5%; transform: none; }
+    /* Delay para sequência */
+    .quote:nth-child(1) { animation-delay: 0s,   0s; }
+    .quote:nth-child(2) { animation-delay: 30s,  0s; }
+    .quote:nth-child(3) { animation-delay: 60s,  0s; }
+    .quote:nth-child(4) { animation-delay: 90s,  0s; }
+    /* Aparecer (5s), visível (20s), desaparecer (5s) */
     @keyframes quoteCycle {
-      0%   { opacity: 0; }
-      4.17% { opacity: 1; }
-      20.83% { opacity: 1; }
-      25% { opacity: 0; }
-      100% { opacity: 0; }
+      0%    { opacity: 0; transform: scale(0.8); }
+      4.17% { opacity: 1; transform: scale(1); }
+      20.83%{ opacity: 1; transform: scale(1); }
+      25%   { opacity: 0; transform: scale(0.8); }
+      100%  { opacity: 0; }
     }
     /* Efeito de brilho nas letras */
     @keyframes textGlow {
-      0%, 100% { text-shadow: 0 0 2px #fff; }
-      50% { text-shadow: 0 0 10px #ff0; }
+      0%,100% { text-shadow: 0 0 2px #fff; }
+      50%      { text-shadow: 0 0 10px #ff0; }
+    }
+    /* Media query para mobile */
+    @media (max-width: 600px) {
+      .center-image { max-width: 200px; }
+      .quote {
+        max-width: 80%;
+        font-size: 1rem;
+        padding: 0.4rem;
+      }
+      /* Todas as frases aparecem centralizadas abaixo da imagem */
+      .top-left, .top-right, .bottom-left, .bottom-right {
+        top: auto;
+        bottom: 10%;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+      }
     }
   </style>
 </head>
@@ -90,7 +105,7 @@
     <img src="imagem2.jpg" alt="Parabéns!" class="center-image">
   </div>
   <div class="quotes">
-    <div class="quote top-left">"Ta quase chegando nos 30 hein. Não treine muito, use drogas."<br> -Karen</div>
+    <div class="quote top-left">"Feliz aniversário!<br>Que seu dia seja incrível!"</div>
     <div class="quote top-right">"Muitas felicidades<br>e sucesso sempre!"</div>
     <div class="quote bottom-left">"Parabéns!<br>Aproveite cada momento!"</div>
     <div class="quote bottom-right">"Que seus sonhos se<br>realizem hoje e sempre!"</div>
@@ -160,7 +175,6 @@
     function animate() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      // gera fogos uniformemente pela tela
       if (random(0, 1) < 0.1) {
         fireworks.push(new Firework());
       }
